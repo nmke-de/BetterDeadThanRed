@@ -26,10 +26,18 @@ func newComradeVodka(x, y uint) ComradeVodka {
 	}
 }
 
+func (c ComradeVodka) Allegiance() []Allegiance {
+	return []Allegiance{commie, comradeVodka}
+}
+
 func (c ComradeVodka) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(c.state.x), float64(c.state.y))
 	surface.DrawImage(c.img, op)
+}
+
+func (c ComradeVodka) Position() (uint, uint) {
+	return c.state.x, c.state.y
 }
 
 func (c ComradeVodka) Update(width, height uint) error {
@@ -49,6 +57,5 @@ func (c ComradeVodka) Update(width, height uint) error {
 	}
 	c.state.x = uint(min(max(int(c.state.x) + x, 0), w))
 	c.state.y = uint(min(max(int(c.state.y) + y, 0), h))
-	println(c.state.x, c.state.y)
 	return nil
 }

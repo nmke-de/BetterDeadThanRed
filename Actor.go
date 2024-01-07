@@ -5,6 +5,8 @@ import (
 )
 
 type Actor interface {
+	Allegiance() []Allegiance
 	Draw(*ebiten.Image)
+	Position() (uint, uint)
 	Update(uint, uint) error
 }

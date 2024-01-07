@@ -26,10 +26,18 @@ func newPlayer(x, y uint) Player {
 	}
 }
 
+func (p Player) Allegiance() []Allegiance {
+	return []Allegiance{player}
+}
+
 func (p Player) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.state.x), float64(p.state.y))
 	surface.DrawImage(p.img, op)
+}
+
+func (p Player) Position() (uint, uint) {
+	return p.state.x, p.state.y
 }
 
 func (p Player) Update(width, height uint) error {
