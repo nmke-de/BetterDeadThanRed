@@ -43,18 +43,8 @@ func (c ComradeVodka) Position() (uint, uint) {
 func (c ComradeVodka) Update(width, height uint) error {
 	w := int(width)
 	h := int(height)
-	x := 0
-	if (rand.Int() % 2 == 0) {
-		x = -1
-	} else {
-		x = 1
-	}
-	y := 0
-	if (rand.Int() % 2 == 0) {
-		y = -1
-	} else {
-		y = 1
-	}
+	x := rand.Int() % 3 - 1
+	y := rand.Int() % 3 - 1
 	c.state.x = uint(min(max(int(c.state.x) + x, 0), w))
 	c.state.y = uint(min(max(int(c.state.y) + y, 0), h))
 	return nil
