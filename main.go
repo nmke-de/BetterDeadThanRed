@@ -39,8 +39,14 @@ func init() {
 	scenes = map[string]Scene{
 		"title":   TextScreen{"La TITELO", "Hello, there!\nLorem ipsum dolor sit, amet. Consetetur.", "Funky12"},
 		"Funky12": FunkyHello{12, "Funky3"},
-		"Victory": TextScreen{"Victory!", "If you see this, you have won!\nCongrats!", "title"},
+		"Victory": TextScreen{"Victory!", "If you see this, you have won!\nCongrats!", "Room"},
 		"Funky3":  FunkyHello{3, "Victory"},
+		"Room": Room{
+			550, 450,
+			&[]Actor{
+				newPlayer(100, 100),
+			},
+		},
 	}
 }
 
