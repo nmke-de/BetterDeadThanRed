@@ -17,7 +17,7 @@ type PlayerState struct {
 
 func newPlayer(x, y uint) Player {
 	img := ebiten.NewImage(10, 10)
-	img.Fill(color.RGBA{uint8(255), uint8(16), uint8(32), 255})
+	img.Fill(color.RGBA{uint8(255), uint8(128), uint8(32), 255})
 	return Player {
 		&PlayerState {
 			x, y,
@@ -38,16 +38,12 @@ func (p Player) Update(width, height uint) error {
 		switch key {
 		case ebiten.KeyA:
 			p.state.x = uint(max(int(p.state.x - 1), 0))
-			println(p.state.x, p.state.y)
 		case ebiten.KeyD:
 			p.state.x = min(p.state.x + 1, width)
-			println(p.state.x, p.state.y)
 		case ebiten.KeyS:
 			p.state.y = min(p.state.y + 1, height)
-			println(p.state.x, p.state.y)
 		case ebiten.KeyW:
 			p.state.y = uint(max(int(p.state.y - 1), 0))
-			println(p.state.x, p.state.y)
 		}
 	}
 	return nil
