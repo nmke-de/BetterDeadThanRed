@@ -40,9 +40,9 @@ func (c ComradeVodka) Position() (uint, uint) {
 	return c.state.x, c.state.y
 }
 
-func (c ComradeVodka) Update(width, height uint) error {
-	w := int(width)
-	h := int(height)
+func (c ComradeVodka) Update(r Room) error {
+	w := int(r.width)
+	h := int(r.height)
 	x := rand.Int() % 3 - 1
 	y := rand.Int() % 3 - 1
 	c.state.x = uint(min(max(int(c.state.x) + x, 0), w))

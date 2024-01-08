@@ -44,7 +44,7 @@ func (p Player) Position() (uint, uint) {
 	return p.state.x, p.state.y
 }
 
-func (p Player) Update(width, height uint) error {
+func (p Player) Update(r Room) error {
 	movement := false
 	pressed := inpututil.AppendPressedKeys([]ebiten.Key{})
 	for _, key := range pressed {
@@ -53,10 +53,10 @@ func (p Player) Update(width, height uint) error {
 			p.state.x = uint(max(int(p.state.x - 1), 0))
 			movement = true
 		case ebiten.KeyD:
-			p.state.x = min(p.state.x + 1, width)
+			p.state.x = min(p.state.x + 1, r.width)
 			movement = true
 		case ebiten.KeyS:
-			p.state.y = min(p.state.y + 1, height)
+			p.state.y = min(p.state.y + 1, r.height)
 			movement = true
 		case ebiten.KeyW:
 			p.state.y = uint(max(int(p.state.y - 1), 0))

@@ -31,7 +31,7 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 		}
 	}*/
 	for _, a := range *r.actors {
-		unwrap(a.Update(r.width, r.height))
+		unwrap(a.Update(r))
 	}
 	return nil
 }

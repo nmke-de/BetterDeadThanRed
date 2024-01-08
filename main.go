@@ -46,6 +46,7 @@ func init() {
 			&[]Actor{
 				newPlayer(100, 100),
 				newComradeVodka(300, 300),
+				newCommie(400, 400),
 			},
 		},
 	}
