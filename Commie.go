@@ -57,6 +57,8 @@ func (c Commie) Update(r Room) error {
 			break
 		}
 	}
+
+	// Move
 	if px < c.state.x {
 		c.state.x--
 	} else if px > c.state.x {
