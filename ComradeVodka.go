@@ -8,7 +8,7 @@ import (
 
 type ComradeVodka struct {
 	state *ComradeVodkaState
-	img *ebiten.Image
+	img   *ebiten.Image
 }
 
 type ComradeVodkaState struct {
@@ -18,8 +18,8 @@ type ComradeVodkaState struct {
 func newComradeVodka(x, y uint) ComradeVodka {
 	img := ebiten.NewImage(10, 10)
 	img.Fill(color.RGBA{uint8(255), uint8(16), uint8(32), 255})
-	return ComradeVodka {
-		&ComradeVodkaState {
+	return ComradeVodka{
+		&ComradeVodkaState{
 			x, y,
 		},
 		img,
@@ -43,9 +43,9 @@ func (c ComradeVodka) Position() (uint, uint) {
 func (c ComradeVodka) Update(r Room) error {
 	w := int(r.width)
 	h := int(r.height)
-	x := rand.Int() % 3 - 1
-	y := rand.Int() % 3 - 1
-	c.state.x = uint(min(max(int(c.state.x) + x, 0), w))
-	c.state.y = uint(min(max(int(c.state.y) + y, 0), h))
+	x := rand.Int()%3 - 1
+	y := rand.Int()%3 - 1
+	c.state.x = uint(min(max(int(c.state.x)+x, 0), w))
+	c.state.y = uint(min(max(int(c.state.y)+y, 0), h))
 	return nil
 }

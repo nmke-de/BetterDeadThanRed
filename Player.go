@@ -9,17 +9,17 @@ const on_frames = 7
 
 type Player struct {
 	state *PlayerState
-	imgs []*ebiten.Image
+	imgs  []*ebiten.Image
 }
 
 type PlayerState struct {
-	x, y uint
+	x, y            uint
 	animation_state uint
 }
 
 func newPlayer(x, y uint) Player {
-	return Player {
-		&PlayerState {
+	return Player{
+		&PlayerState{
 			x, y,
 			0,
 		},
@@ -37,7 +37,7 @@ func (p Player) Allegiance() []Allegiance {
 func (p Player) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.state.x), float64(p.state.y))
-	surface.DrawImage(p.imgs[p.state.animation_state / on_frames], op)
+	surface.DrawImage(p.imgs[p.state.animation_state/on_frames], op)
 }
 
 func (p Player) Position() (uint, uint) {
@@ -50,21 +50,21 @@ func (p Player) Update(r Room) error {
 	for _, key := range pressed {
 		switch key {
 		case ebiten.KeyA:
-			p.state.x = uint(max(int(p.state.x - 1), 0))
+			p.state.x = uint(max(int(p.state.x-1), 0))
 			movement = true
 		case ebiten.KeyD:
-			p.state.x = min(p.state.x + 1, r.width)
+			p.state.x = min(p.state.x+1, r.width)
 			movement = true
 		case ebiten.KeyS:
-			p.state.y = min(p.state.y + 1, r.height)
+			p.state.y = min(p.state.y+1, r.height)
 			movement = true
 		case ebiten.KeyW:
-			p.state.y = uint(max(int(p.state.y - 1), 0))
+			p.state.y = uint(max(int(p.state.y-1), 0))
 			movement = true
 		}
 	}
 	if movement {
-		p.state.animation_state = (p.state.animation_state + 1) % uint(len(p.imgs) * on_frames)
+		p.state.animation_state = (p.state.animation_state + 1) % uint(len(p.imgs)*on_frames)
 	} else {
 		p.state.animation_state = 0
 	}

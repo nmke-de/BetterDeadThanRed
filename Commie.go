@@ -7,7 +7,7 @@ import (
 
 type Commie struct {
 	state *CommieState
-	img *ebiten.Image
+	img   *ebiten.Image
 }
 
 type CommieState struct {
@@ -17,8 +17,8 @@ type CommieState struct {
 func newCommie(x, y uint) Commie {
 	img := ebiten.NewImage(10, 10)
 	img.Fill(color.RGBA{uint8(255), uint8(16), uint8(32), 255})
-	return Commie {
-		&CommieState {
+	return Commie{
+		&CommieState{
 			x, y,
 		},
 		img,
@@ -61,7 +61,7 @@ func (c Commie) Update(r Room) error {
 		c.state.x--
 	} else if px > c.state.x {
 		c.state.x++
-	} else
+	}
 	if py < c.state.y {
 		c.state.y--
 	} else if py > c.state.y {
