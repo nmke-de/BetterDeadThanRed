@@ -54,7 +54,7 @@ func init() {
 func main() {
 	ebiten.SetWindowSize(layout_width, layout_height)
 	ebiten.SetWindowResizable(true)
-	ebiten.SetWindowTitle("TextScreen")
+	ebiten.SetWindowTitle("Better Dead Than Red")
 	game := &Game{scenes["title"], 0, false}
 	err := ebiten.RunGame(game)
 	unwrap(err)
