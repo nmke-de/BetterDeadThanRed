@@ -1,13 +1,12 @@
 package main
 
 import (
-	"os"
 	"image"
 	_ "image/png"
 )
 
 func loadPNG(path string) image.Image {
-	f, err := os.Open(path)
+	f, err := assets.Open(path)
 	unwrap(err)
 	defer f.Close()
 	img, _, err := image.Decode(f)
