@@ -10,8 +10,11 @@ type Room struct {
 	// TODO scene data
 	width  uint
 	height uint
-	actors *[]Actor // TODO implement Actor (interface for player character, mobs, NPCs, perhaps even obstacles etc)
+	actors *[]Actor // (interface for player character, mobs, NPCs, perhaps even obstacles etc)
+	cache  RoomCache
 }
+
+type RoomCache map[string]int
 
 func (r Room) Draw(screen *ebiten.Image, _ *Game) {
 	// TODO draw
@@ -30,8 +33,26 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 			game.current = scenes[t.next_scene]
 		}
 	}*/
-	for _, a := range *r.actors {
+	// Update cache
+	for i, a := range *r.actors {
+		isplayer := false
+		for _, allegiance := range a.Allegiance() {
+			if allegiance == player {
+				isplayer = true
+			}
+		}
+		if isplayer {
+			r.cache["player"] = i
+		}
+	}
+
+	for i, a := range *r.actors {
 		unwrap(a.Update(r))
+
+		// Remove dead actors
+		if !a.Alive() {
+			*r.actors = remove(*r.actors, i)
+		}
 	}
 	return nil
 }

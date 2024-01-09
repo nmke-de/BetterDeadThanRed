@@ -1,6 +1,6 @@
 package main
 
-func remove(arr []any, index uint) []any {
+func remove[T any](arr []T, index int) []T {
 	if len(arr) == 0 {
 		return arr
 	}

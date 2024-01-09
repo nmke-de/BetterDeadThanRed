@@ -30,6 +30,10 @@ func newPlayer(x, y uint) Player {
 	}
 }
 
+func (p Player) Alive() bool {
+	return true
+}
+
 func (p Player) Allegiance() []Allegiance {
 	return []Allegiance{player}
 }

@@ -26,6 +26,10 @@ func newComradeVodka(x, y uint) ComradeVodka {
 	}
 }
 
+func (c ComradeVodka) Alive() bool {
+	return true
+}
+
 func (c ComradeVodka) Allegiance() []Allegiance {
 	return []Allegiance{commie, comradeVodka}
 }

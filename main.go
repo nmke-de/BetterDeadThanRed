@@ -48,6 +48,7 @@ func init() {
 				newComradeVodka(300, 300),
 				newCommie(400, 400),
 			},
+			RoomCache(map[string]int{}),
 		},
 	}
 }

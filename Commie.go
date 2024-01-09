@@ -25,6 +25,10 @@ func newCommie(x, y uint) Commie {
 	}
 }
 
+func (c Commie) Alive() bool {
+	return true
+}
+
 func (c Commie) Allegiance() []Allegiance {
 	return []Allegiance{commie}
 }
@@ -44,19 +48,7 @@ func (c Commie) Update(r Room) error {
 	h := int(r.height)
 
 	// Find player
-	var px, py uint
-	for _, a := range *r.actors {
-		isplayer := false
-		for _, allegiance := range a.Allegiance() {
-			if allegiance == player {
-				isplayer = true
-			}
-		}
-		if isplayer {
-			px, py = a.Position()
-			break
-		}
-	}
+	px, py := (*r.actors)[r.cache["player"]].Position()
 
 	// Move
 	if px < c.state.x {
