@@ -36,7 +36,7 @@ func (r Room) Draw(screen *ebiten.Image, _ *Game) {
 		a.Draw(r.surface)
 	}
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(15, 15)
+	op.GeoM.Translate(15, 0)
 	screen.DrawImage(r.surface, op)
 }
 
