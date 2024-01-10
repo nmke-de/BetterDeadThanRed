@@ -34,6 +34,11 @@ func (c ComradeVodka) Allegiance() []Allegiance {
 	return []Allegiance{commie, comradeVodka}
 }
 
+func (c ComradeVodka) Collide(r Room) {
+	// TODO collision detection
+	return
+}
+
 func (c ComradeVodka) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(c.state.x), float64(c.state.y))
@@ -41,7 +46,7 @@ func (c ComradeVodka) Draw(surface *ebiten.Image) {
 }
 
 func (c ComradeVodka) Hitbox() uint {
-	return 30
+	return 15
 }
 
 func (c ComradeVodka) Position() (uint, uint) {

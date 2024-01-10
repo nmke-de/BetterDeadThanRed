@@ -33,6 +33,11 @@ func (c Commie) Allegiance() []Allegiance {
 	return []Allegiance{commie}
 }
 
+func (c Commie) Collide(r Room) {
+	// TODO collision detection
+	return
+}
+
 func (c Commie) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(c.state.x), float64(c.state.y))
@@ -40,7 +45,7 @@ func (c Commie) Draw(surface *ebiten.Image) {
 }
 
 func (c Commie) Hitbox() uint {
-	return 30
+	return 15
 }
 
 func (c Commie) Position() (uint, uint) {

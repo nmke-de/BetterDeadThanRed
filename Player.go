@@ -38,6 +38,21 @@ func (p Player) Allegiance() []Allegiance {
 	return []Allegiance{player}
 }
 
+func (p Player) Collide(r Room) {
+	px, py := p.Position()
+	for _, a := range *r.actors {
+		ax, ay := a.Position()
+		if px == ax && py == ay {
+			continue
+		}
+		dist := distance(px, py, ax, ay)
+		if dist < (p.Hitbox() + a.Hitbox()) {
+			p.state.x = clamp((px+px-ax), 0, r.width)
+			p.state.y = clamp((py+py-ay), 0, r.height)
+		}
+	}
+}
+
 func (p Player) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.state.x), float64(p.state.y))
@@ -45,7 +60,7 @@ func (p Player) Draw(surface *ebiten.Image) {
 }
 
 func (p Player) Hitbox() uint {
-	return 30
+	return 15
 }
 
 func (p Player) Position() (uint, uint) {
