@@ -18,9 +18,9 @@ type Room struct {
 type RoomCache map[string]int
 
 func newRoom(w, h uint, actors *[]Actor) Room {
-	return Room {
+	return Room{
 		w, h,
-		ebiten.NewImage(int(w), int(h)),
+		ebiten.NewImage(int(w+30), int(h+30)),
 		actors,
 		RoomCache(map[string]int{}),
 	}
