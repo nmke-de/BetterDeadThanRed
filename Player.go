@@ -55,7 +55,7 @@ func (p Player) Collide(r Room) {
 
 func (p Player) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(float64(p.state.x), float64(p.state.y))
+	op.GeoM.Translate(float64(p.state.x - p.Hitbox()), float64(p.state.y - p.Hitbox()))
 	surface.DrawImage(p.imgs[p.state.animation_state/on_frames], op)
 }
 
