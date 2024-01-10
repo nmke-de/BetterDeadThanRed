@@ -40,6 +40,10 @@ func (c ComradeVodka) Draw(surface *ebiten.Image) {
 	surface.DrawImage(c.img, op)
 }
 
+func (c ComradeVodka) Hitbox() uint {
+	return 30
+}
+
 func (c ComradeVodka) Position() (uint, uint) {
 	return c.state.x, c.state.y
 }

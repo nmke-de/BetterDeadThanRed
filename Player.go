@@ -44,6 +44,10 @@ func (p Player) Draw(surface *ebiten.Image) {
 	surface.DrawImage(p.imgs[p.state.animation_state/on_frames], op)
 }
 
+func (p Player) Hitbox() uint {
+	return 30
+}
+
 func (p Player) Position() (uint, uint) {
 	return p.state.x, p.state.y
 }

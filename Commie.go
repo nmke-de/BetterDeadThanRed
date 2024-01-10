@@ -39,6 +39,10 @@ func (c Commie) Draw(surface *ebiten.Image) {
 	surface.DrawImage(c.img, op)
 }
 
+func (c Commie) Hitbox() uint {
+	return 30
+}
+
 func (c Commie) Position() (uint, uint) {
 	return c.state.x, c.state.y
 }

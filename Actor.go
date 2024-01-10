@@ -9,6 +9,7 @@ type Actor interface {
 	Alive() bool
 	Allegiance() []Allegiance
 	Draw(*ebiten.Image)
+	Hitbox() uint
 	Position() (uint, uint)
 	Update(Room) error
 }
