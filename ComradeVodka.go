@@ -34,7 +34,7 @@ func (c ComradeVodka) Allegiance() []Allegiance {
 	return []Allegiance{commie, comradeVodka}
 }
 
-func (c ComradeVodka) Collide(r Room) {
+func (c ComradeVodka) Collide(a Actor) {
 	// TODO collision detection
 	return
 }

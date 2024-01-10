@@ -44,7 +44,7 @@ func init() {
 		"Room": Room{
 			550, 450,
 			&[]Actor{
-				newPlayer(100, 100),
+				newPlayer(100, 100, "Room"),
 				newComradeVodka(300, 300),
 				newCommie(400, 400),
 			},

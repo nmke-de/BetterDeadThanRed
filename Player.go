@@ -10,6 +10,7 @@ const on_frames = 7
 type Player struct {
 	state *PlayerState
 	imgs  []*ebiten.Image
+	roomname string
 }
 
 type PlayerState struct {
@@ -17,7 +18,7 @@ type PlayerState struct {
 	animation_state uint
 }
 
-func newPlayer(x, y uint) Player {
+func newPlayer(x, y uint, roomname string) Player {
 	return Player{
 		&PlayerState{
 			x, y,
@@ -27,6 +28,7 @@ func newPlayer(x, y uint) Player {
 			ebiten.NewImageFromImage(loadPNG("Libright.png")),
 			ebiten.NewImageFromImage(loadPNG("Libright_Jump.png")),
 		},
+		roomname,
 	}
 }
 
@@ -38,19 +40,12 @@ func (p Player) Allegiance() []Allegiance {
 	return []Allegiance{player}
 }
 
-func (p Player) Collide(r Room) {
+func (p Player) Collide(a Actor) {
 	px, py := p.Position()
-	for _, a := range *r.actors {
-		ax, ay := a.Position()
-		if px == ax && py == ay {
-			continue
-		}
-		dist := distance(px, py, ax, ay)
-		if dist < (p.Hitbox() + a.Hitbox()) {
-			p.state.x = clamp((px+px-ax), 0, r.width)
-			p.state.y = clamp((py+py-ay), 0, r.height)
-		}
-	}
+	ax, ay := a.Position()
+	r := Room(scenes[p.roomname].(Room))
+	p.state.x = clamp((px+px-ax), 0, r.width)
+	p.state.y = clamp((py+py-ay), 0, r.height)
 }
 
 func (p Player) Draw(surface *ebiten.Image) {

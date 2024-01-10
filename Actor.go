@@ -8,7 +8,7 @@ import (
 type Actor interface {
 	Alive() bool
 	Allegiance() []Allegiance
-	Collide(Room)
+	Collide(Actor)
 	Draw(*ebiten.Image)
 	Hitbox() uint
 	Position() (uint, uint)
