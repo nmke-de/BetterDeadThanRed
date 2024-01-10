@@ -8,8 +8,8 @@ import (
 const on_frames = 7
 
 type Player struct {
-	state *PlayerState
-	imgs  []*ebiten.Image
+	state    *PlayerState
+	imgs     []*ebiten.Image
 	roomname string
 }
 
@@ -44,13 +44,13 @@ func (p Player) Collide(a Actor) {
 	px, py := p.Position()
 	ax, ay := a.Position()
 	r := Room(scenes[p.roomname].(Room))
-	p.state.x = clamp((px+px-ax), 0, r.width)
-	p.state.y = clamp((py+py-ay), 0, r.height)
+	p.state.x = clamp((px + px - ax), 0, r.width)
+	p.state.y = clamp((py + py - ay), 0, r.height)
 }
 
 func (p Player) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(float64(p.state.x - p.Hitbox()), float64(p.state.y - p.Hitbox()))
+	op.GeoM.Translate(float64(p.state.x-p.Hitbox()), float64(p.state.y-p.Hitbox()))
 	surface.DrawImage(p.imgs[p.state.animation_state/on_frames], op)
 }
 

@@ -9,13 +9,14 @@ import (
 type ComradeVodka struct {
 	state *ComradeVodkaState
 	img   *ebiten.Image
+	roomname string
 }
 
 type ComradeVodkaState struct {
 	x, y uint
 }
 
-func newComradeVodka(x, y uint) ComradeVodka {
+func newComradeVodka(x, y uint, roomname string) ComradeVodka {
 	img := ebiten.NewImage(10, 10)
 	img.Fill(color.RGBA{uint8(255), uint8(16), uint8(32), 255})
 	return ComradeVodka{
@@ -23,6 +24,7 @@ func newComradeVodka(x, y uint) ComradeVodka {
 			x, y,
 		},
 		img,
+		roomname,
 	}
 }
 
@@ -35,8 +37,11 @@ func (c ComradeVodka) Allegiance() []Allegiance {
 }
 
 func (c ComradeVodka) Collide(a Actor) {
-	// TODO collision detection
-	return
+	cx, cy := c.Position()
+	ax, ay := a.Position()
+	r := Room(scenes[c.roomname].(Room))
+	c.state.x = clamp((cx + cx - ax), 0, r.width)
+	c.state.y = clamp((cy + cy - ay), 0, r.height)
 }
 
 func (c ComradeVodka) Draw(surface *ebiten.Image) {

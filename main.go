@@ -45,8 +45,8 @@ func init() {
 			550, 450,
 			&[]Actor{
 				newPlayer(100, 100, "Room"),
-				newComradeVodka(300, 300),
-				newCommie(400, 400),
+				newComradeVodka(300, 300, "Room"),
+				newCommie(400, 400, "Room"),
 			},
 			RoomCache(map[string]int{}),
 		},
