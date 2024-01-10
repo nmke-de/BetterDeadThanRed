@@ -41,17 +41,18 @@ func init() {
 		"Funky12": FunkyHello{12, "Funky3"},
 		"Victory": TextScreen{"Victory!", "If you see this, you have won!\nCongrats!", "Room"},
 		"Funky3":  FunkyHello{3, "Victory"},
-		"Room": Room{
+		"Room": newRoom(
 			550, 450,
 			&[]Actor{
 				newPlayer(100, 100, "Room"),
 				newComradeVodka(300, 300, "Room"),
 				newCommie(400, 400, "Room"),
 			},
-			RoomCache(map[string]int{}),
-		},
+		),
 	}
 }
+
+const on_frames = 7
 
 func main() {
 	ebiten.SetWindowSize(layout_width, layout_height)

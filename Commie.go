@@ -2,27 +2,28 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"image/color"
 )
 
 type Commie struct {
 	state    *CommieState
-	img      *ebiten.Image
+	imgs     []*ebiten.Image
 	roomname string
 }
 
 type CommieState struct {
-	x, y uint
+	x, y            uint
+	animation_state uint
 }
 
 func newCommie(x, y uint, roomname string) Commie {
-	img := ebiten.NewImage(10, 10)
-	img.Fill(color.RGBA{uint8(255), uint8(16), uint8(32), 255})
 	return Commie{
 		&CommieState{
-			x, y,
+			x, y, 0,
 		},
-		img,
+		[]*ebiten.Image{
+			ebiten.NewImageFromImage(loadPNG("Commie.png")),
+			ebiten.NewImageFromImage(loadPNG("Commie_Jump.png")),
+		},
 		roomname,
 	}
 }
@@ -46,7 +47,7 @@ func (c Commie) Collide(a Actor) {
 func (c Commie) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(c.state.x), float64(c.state.y))
-	surface.DrawImage(c.img, op)
+	surface.DrawImage(c.imgs[c.state.animation_state/on_frames], op)
 }
 
 func (c Commie) Hitbox() uint {
@@ -65,17 +66,28 @@ func (c Commie) Update(r Room) error {
 	px, py := (*r.actors)[r.cache["player"]].Position()
 
 	// Move
+	movement_x := true
 	if px < c.state.x {
 		c.state.x--
 	} else if px > c.state.x {
 		c.state.x++
+	} else {
+		movement_x = false
 	}
+	movement_y := true
 	if py < c.state.y {
 		c.state.y--
 	} else if py > c.state.y {
 		c.state.y++
+	} else {
+		movement_y = false
 	}
 	c.state.x = uint(min(max(int(c.state.x), 0), w))
 	c.state.y = uint(min(max(int(c.state.y), 0), h))
+	if movement_x || movement_y {
+		c.state.animation_state = (c.state.animation_state + 1) % uint(len(c.imgs)*on_frames)
+	} else {
+		c.state.animation_state = 0
+	}
 	return nil
 }

@@ -8,31 +8,39 @@ import (
 
 type Room struct {
 	// TODO scene data
-	width  uint
-	height uint
-	actors *[]Actor // (interface for player character, mobs, NPCs, perhaps even obstacles etc)
-	cache  RoomCache
+	width   uint
+	height  uint
+	surface *ebiten.Image
+	actors  *[]Actor // (interface for player character, mobs, NPCs, perhaps even obstacles etc)
+	cache   RoomCache
 }
 
 type RoomCache map[string]int
+
+func newRoom(w, h uint, actors *[]Actor) Room {
+	return Room {
+		w, h,
+		ebiten.NewImage(int(w), int(h)),
+		actors,
+		RoomCache(map[string]int{}),
+	}
+}
 
 func (r Room) Draw(screen *ebiten.Image, _ *Game) {
 	// TODO draw
 	bg := color.RGBA{uint8(10), uint8(10), uint8(10), 200}
 	// fg := color.RGBA{uint8(255), uint8(255), uint8(255), 200}
 	screen.Fill(bg)
+	r.surface.Fill(bg)
 	for _, a := range *r.actors {
-		a.Draw(screen)
+		a.Draw(r.surface)
 	}
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(15, 15)
+	screen.DrawImage(r.surface, op)
 }
 
 func (r Room) Update(game *Game, pressed []ebiten.Key) error {
-	// TODO update
-	/*for _, key := range pressed {
-		if key == ebiten.KeySpace {
-			game.current = scenes[t.next_scene]
-		}
-	}*/
 	// Update cache
 	for i, a := range *r.actors {
 		isplayer := false

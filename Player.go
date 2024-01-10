@@ -5,8 +5,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-const on_frames = 7
-
 type Player struct {
 	state    *PlayerState
 	imgs     []*ebiten.Image
@@ -50,7 +48,7 @@ func (p Player) Collide(a Actor) {
 
 func (p Player) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(float64(p.state.x-p.Hitbox()), float64(p.state.y-p.Hitbox()))
+	op.GeoM.Translate(float64(p.state.x), float64(p.state.y))
 	surface.DrawImage(p.imgs[p.state.animation_state/on_frames], op)
 }
 

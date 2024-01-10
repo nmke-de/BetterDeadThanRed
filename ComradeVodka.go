@@ -2,28 +2,29 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"image/color"
 	"math/rand"
 )
 
 type ComradeVodka struct {
-	state *ComradeVodkaState
-	img   *ebiten.Image
+	state    *ComradeVodkaState
+	imgs     []*ebiten.Image
 	roomname string
 }
 
 type ComradeVodkaState struct {
-	x, y uint
+	x, y            uint
+	animation_state uint
 }
 
 func newComradeVodka(x, y uint, roomname string) ComradeVodka {
-	img := ebiten.NewImage(10, 10)
-	img.Fill(color.RGBA{uint8(255), uint8(16), uint8(32), 255})
 	return ComradeVodka{
 		&ComradeVodkaState{
-			x, y,
+			x, y, 0,
 		},
-		img,
+		[]*ebiten.Image{
+			ebiten.NewImageFromImage(loadPNG("Commie.png")),
+			ebiten.NewImageFromImage(loadPNG("Commie_Jump.png")),
+		},
 		roomname,
 	}
 }
@@ -47,7 +48,7 @@ func (c ComradeVodka) Collide(a Actor) {
 func (c ComradeVodka) Draw(surface *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(c.state.x), float64(c.state.y))
-	surface.DrawImage(c.img, op)
+	surface.DrawImage(c.imgs[c.state.animation_state/on_frames], op)
 }
 
 func (c ComradeVodka) Hitbox() uint {
@@ -65,5 +66,10 @@ func (c ComradeVodka) Update(r Room) error {
 	y := rand.Int()%3 - 1
 	c.state.x = uint(min(max(int(c.state.x)+x, 0), w))
 	c.state.y = uint(min(max(int(c.state.y)+y, 0), h))
+	if abs(x) + abs(y) > 0 {
+		c.state.animation_state = (c.state.animation_state + 1) % uint(len(c.imgs)*on_frames)
+	} else {
+		c.state.animation_state = 0
+	}
 	return nil
 }
