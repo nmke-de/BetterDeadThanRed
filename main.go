@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
@@ -31,6 +32,13 @@ func init() {
 		Hinting: font.HintingFull,
 	})
 	unwrap(err)
+}
+
+var audioContext *audio.Context
+const sampleRate = 44100
+
+func init() {
+	audioContext = audio.NewContext(sampleRate)
 }
 
 var scenes map[string]Scene

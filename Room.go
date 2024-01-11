@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	// "github.com/hajimehoshi/ebiten/v2/text"
+	"github.com/hajimehoshi/ebiten/v2/audio"
 	"image/color"
 )
 
@@ -13,6 +13,7 @@ type Room struct {
 	surface *ebiten.Image
 	actors  *[]Actor // (interface for player character, mobs, NPCs, perhaps even obstacles etc)
 	cache   RoomCache
+	bgm     *audio.Player
 }
 
 type RoomCache map[string]int
@@ -23,6 +24,7 @@ func newRoom(w, h uint, actors *[]Actor) Room {
 		ebiten.NewImage(int(w+30), int(h+30)),
 		actors,
 		RoomCache(map[string]int{}),
+		loadOGG("glory_glory_hallelujah.ogg", audioContext),
 	}
 }
 
@@ -41,6 +43,13 @@ func (r Room) Draw(screen *ebiten.Image, _ *Game) {
 }
 
 func (r Room) Update(game *Game, pressed []ebiten.Key) error {
+	// Check whether audio is playing
+	if !r.bgm.IsPlaying() {
+		err := r.bgm.Rewind()
+		unwrap(err)
+		r.bgm.Play()
+	}
+
 	// Update cache
 	for i, a := range *r.actors {
 		isplayer := false
