@@ -58,14 +58,15 @@ func (c ComradeVodka) TakeDamage(damage int) {
 	c.state.health -= damage
 }
 
-func (c ComradeVodka) Update(r Room) error {
+func (c ComradeVodka) Update() error {
+	r := Room(scenes[c.roomname].(Room))
 	w := int(r.width)
 	h := int(r.height)
 	x := rand.Int()%3 - 1
 	y := rand.Int()%3 - 1
 	c.state.x = uint(min(max(int(c.state.x)+x, 0), w))
 	c.state.y = uint(min(max(int(c.state.y)+y, 0), h))
-	if abs(x) + abs(y) > 0 {
+	if abs(x)+abs(y) > 0 {
 		c.state.animation_state = (c.state.animation_state + 1) % uint(len(c.imgs)*on_frames)
 	} else {
 		c.state.animation_state = 0

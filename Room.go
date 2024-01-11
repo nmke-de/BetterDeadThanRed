@@ -64,7 +64,7 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 	}
 
 	for i, a := range *r.actors {
-		unwrap(a.Update(r))
+		unwrap(a.Update())
 		// Collision detection and resolve
 		ax, ay := a.Position()
 		for _, a2 := range *r.actors {

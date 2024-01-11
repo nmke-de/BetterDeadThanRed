@@ -13,5 +13,5 @@ type Actor interface {
 	Hitbox() uint
 	Position() (uint, uint)
 	TakeDamage(int)
-	Update(Room) error
+	Update() error
 }

@@ -57,7 +57,8 @@ func (c Commie) TakeDamage(dmg int) {
 	c.state.health -= dmg
 }
 
-func (c Commie) Update(r Room) error {
+func (c Commie) Update() error {
+	r := Room(scenes[c.roomname].(Room))
 	w := int(r.width)
 	h := int(r.height)
 

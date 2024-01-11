@@ -58,7 +58,8 @@ func (p Player) TakeDamage(damage int) {
 	p.state.health -= damage
 }
 
-func (p Player) Update(r Room) error {
+func (p Player) Update() error {
+	r := Room(scenes[p.roomname].(Room))
 	movement := false
 	pressed := inpututil.AppendPressedKeys([]ebiten.Key{})
 	for _, key := range pressed {

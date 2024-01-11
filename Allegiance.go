@@ -6,4 +6,5 @@ const (
 	player Allegiance = iota
 	commie
 	comradeVodka
+	bullet
 )

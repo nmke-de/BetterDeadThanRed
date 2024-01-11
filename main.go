@@ -35,6 +35,7 @@ func init() {
 }
 
 var audioContext *audio.Context
+
 const sampleRate = 44100
 
 func init() {
