@@ -6,21 +6,15 @@ import (
 )
 
 type Player struct {
-	state    *PlayerState
+	state    *CharacterState
 	imgs     []*ebiten.Image
 	roomname string
 }
 
-type PlayerState struct {
-	x, y            uint
-	animation_state uint
-}
-
 func newPlayer(x, y uint, roomname string) Player {
 	return Player{
-		&PlayerState{
-			x, y,
-			0,
+		&CharacterState{
+			x, y, 0, 5,
 		},
 		[]*ebiten.Image{
 			ebiten.NewImageFromImage(loadPNG("Libright.png")),
@@ -31,7 +25,7 @@ func newPlayer(x, y uint, roomname string) Player {
 }
 
 func (p Player) Alive() bool {
-	return true
+	return p.state.health > 0
 }
 
 func (p Player) Allegiance() []Allegiance {
@@ -58,6 +52,10 @@ func (p Player) Hitbox() uint {
 
 func (p Player) Position() (uint, uint) {
 	return p.state.x, p.state.y
+}
+
+func (p Player) TakeDamage(damage int) {
+	p.state.health -= damage
 }
 
 func (p Player) Update(r Room) error {

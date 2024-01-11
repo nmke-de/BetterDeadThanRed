@@ -12,5 +12,6 @@ type Actor interface {
 	Draw(*ebiten.Image)
 	Hitbox() uint
 	Position() (uint, uint)
+	TakeDamage(int)
 	Update(Room) error
 }

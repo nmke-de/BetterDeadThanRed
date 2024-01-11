@@ -5,20 +5,15 @@ import (
 )
 
 type Commie struct {
-	state    *CommieState
+	state    *CharacterState
 	imgs     []*ebiten.Image
 	roomname string
 }
 
-type CommieState struct {
-	x, y            uint
-	animation_state uint
-}
-
 func newCommie(x, y uint, roomname string) Commie {
 	return Commie{
-		&CommieState{
-			x, y, 0,
+		&CharacterState{
+			x, y, 0, 3,
 		},
 		[]*ebiten.Image{
 			ebiten.NewImageFromImage(loadPNG("Commie.png")),
@@ -29,7 +24,7 @@ func newCommie(x, y uint, roomname string) Commie {
 }
 
 func (c Commie) Alive() bool {
-	return true
+	return c.state.health > 0
 }
 
 func (c Commie) Allegiance() []Allegiance {
@@ -56,6 +51,10 @@ func (c Commie) Hitbox() uint {
 
 func (c Commie) Position() (uint, uint) {
 	return c.state.x, c.state.y
+}
+
+func (c Commie) TakeDamage(dmg int) {
+	c.state.health -= dmg
 }
 
 func (c Commie) Update(r Room) error {

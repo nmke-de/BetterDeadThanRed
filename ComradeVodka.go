@@ -6,20 +6,15 @@ import (
 )
 
 type ComradeVodka struct {
-	state    *ComradeVodkaState
+	state    *CharacterState
 	imgs     []*ebiten.Image
 	roomname string
 }
 
-type ComradeVodkaState struct {
-	x, y            uint
-	animation_state uint
-}
-
 func newComradeVodka(x, y uint, roomname string) ComradeVodka {
 	return ComradeVodka{
-		&ComradeVodkaState{
-			x, y, 0,
+		&CharacterState{
+			x, y, 0, 2,
 		},
 		[]*ebiten.Image{
 			ebiten.NewImageFromImage(loadPNG("Commie.png")),
@@ -30,7 +25,7 @@ func newComradeVodka(x, y uint, roomname string) ComradeVodka {
 }
 
 func (c ComradeVodka) Alive() bool {
-	return true
+	return c.state.health > 0
 }
 
 func (c ComradeVodka) Allegiance() []Allegiance {
@@ -57,6 +52,10 @@ func (c ComradeVodka) Hitbox() uint {
 
 func (c ComradeVodka) Position() (uint, uint) {
 	return c.state.x, c.state.y
+}
+
+func (c ComradeVodka) TakeDamage(damage int) {
+	c.state.health -= damage
 }
 
 func (c ComradeVodka) Update(r Room) error {
