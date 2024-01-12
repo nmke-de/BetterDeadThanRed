@@ -63,6 +63,7 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 		}
 	}
 
+	dead := []int{}
 	for i, a := range *r.actors {
 		unwrap(a.Update())
 		// Collision detection and resolve
@@ -79,10 +80,16 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 			}
 		}
 
-		// Remove dead actors
+		// Detect dead actors
 		if !a.Alive() {
-			*r.actors = remove(*r.actors, i)
+			dead = append(dead, i)
 		}
 	}
+
+	// Remove dead actors
+	for _, i := range dead {
+		*r.actors = remove(*r.actors, i)
+	}
+
 	return nil
 }
