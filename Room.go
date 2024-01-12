@@ -87,8 +87,10 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 	}
 
 	// Remove dead actors
+	removed_dead := 0
 	for _, i := range dead {
-		*r.actors = remove(*r.actors, i)
+		*r.actors = remove(*r.actors, i - removed_dead)
+		removed_dead++
 	}
 
 	return nil
