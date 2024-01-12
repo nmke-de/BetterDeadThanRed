@@ -11,12 +11,12 @@ type Bullet struct {
 	state    *CharacterState
 }
 
-func newBullet(x, y uint, vx, vy int, roomname string) Bullet {
+func newBullet(x, y, vx, vy int, roomname string) Bullet {
 	return Bullet{
 		roomname,
 		vx, vy,
 		&CharacterState{
-			x, y, 0, 1,
+			uint(x), uint(y), 0, 1,
 		},
 	}
 }

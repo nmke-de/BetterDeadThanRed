@@ -56,12 +56,16 @@ func (p Player) Position() (uint, uint) {
 
 func (p Player) TakeDamage(damage int) {
 	p.state.health -= damage
+	println(p.state.health)
 }
 
 func (p Player) Update() error {
 	r := Room(scenes[p.roomname].(Room))
 	movement := false
+	bvx := 0
+	bvy := 0
 	pressed := inpututil.AppendPressedKeys([]ebiten.Key{})
+	justpressed := inpututil.AppendJustPressedKeys([]ebiten.Key{})
 	for _, key := range pressed {
 		switch key {
 		case ebiten.KeyA:
@@ -77,6 +81,22 @@ func (p Player) Update() error {
 			p.state.y = uint(max(int(p.state.y-1), 0))
 			movement = true
 		}
+	}
+	for _, key := range justpressed {
+		switch key {
+		case ebiten.KeyDown:
+			bvy += 2
+		case ebiten.KeyLeft:
+			bvx -= 2
+		case ebiten.KeyRight:
+			bvx += 2
+		case ebiten.KeyUp:
+			bvy -= 2
+		}
+	}
+	if bvx != 0 || bvy != 0 {
+		bullet := newBullet(int(p.state.x) + int(p.Hitbox()) * bvx, int(p.state.y) + int(p.Hitbox()) * bvy, bvx, bvy, p.roomname)
+		*r.actors = append(*r.actors, bullet)
 	}
 	if movement {
 		p.state.animation_state = (p.state.animation_state + 1) % uint(len(p.imgs)*on_frames)
