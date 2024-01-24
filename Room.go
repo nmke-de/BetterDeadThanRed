@@ -19,17 +19,25 @@ type Room struct {
 type RoomCache map[string]int
 
 func newRoom(w, h uint, actors *[]Actor) Room {
+	bgm := loadOGG("glory_glory_hallelujah.ogg", audioContext)
+	bgm.SetVolume(0.02)
 	return Room{
 		w, h,
 		ebiten.NewImage(int(w+30), int(h+30)),
 		actors,
 		RoomCache(map[string]int{}),
-		loadOGG("glory_glory_hallelujah.ogg", audioContext),
+		bgm,
 	}
 }
 
 func (r Room) Draw(screen *ebiten.Image, _ *Game) {
-	// TODO draw
+	// Check whether audio is playing
+	if !r.bgm.IsPlaying() {
+		err := r.bgm.Rewind()
+		unwrap(err)
+		r.bgm.Play()
+	}
+
 	bg := color.RGBA{uint8(10), uint8(10), uint8(10), 200}
 	// fg := color.RGBA{uint8(255), uint8(255), uint8(255), 200}
 	screen.Fill(bg)
@@ -43,13 +51,6 @@ func (r Room) Draw(screen *ebiten.Image, _ *Game) {
 }
 
 func (r Room) Update(game *Game, pressed []ebiten.Key) error {
-	// Check whether audio is playing
-	if !r.bgm.IsPlaying() {
-		err := r.bgm.Rewind()
-		unwrap(err)
-		r.bgm.Play()
-	}
-
 	// Update cache
 	for i, a := range *r.actors {
 		isplayer := false
@@ -89,7 +90,7 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 	// Remove dead actors
 	removed_dead := 0
 	for _, i := range dead {
-		*r.actors = remove(*r.actors, i - removed_dead)
+		*r.actors = remove(*r.actors, i-removed_dead)
 		removed_dead++
 	}
 

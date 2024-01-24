@@ -58,7 +58,7 @@ func (b Bullet) TakeDamage(damage int) {
 
 func (b Bullet) Update() error {
 	r := Room(scenes[b.roomname].(Room))
-	b.state.x = clamp(b.state.x + uint(b.vx), 0, r.width)
-	b.state.y = clamp(b.state.y + uint(b.vy), 0, r.height)
+	b.state.x = clamp(b.state.x+uint(b.vx), 0, r.width)
+	b.state.y = clamp(b.state.y+uint(b.vy), 0, r.height)
 	return nil
 }
