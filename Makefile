@@ -11,3 +11,5 @@ BetterDeadThanRed.wasm:
 
 clean:
 	rm -f BetterDeadThanRed*
+
+.PHONY: build clean
