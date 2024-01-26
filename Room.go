@@ -69,12 +69,14 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 		unwrap(a.Update())
 		// Collision detection and resolve
 		ax, ay := a.Position()
+		ah := a.Hitbox()
 		for _, a2 := range *r.actors {
 			a2x, a2y := a2.Position()
+			a2h := a2.Hitbox()
 			if ax == a2x && ay == a2y {
 				continue
 			}
-			dist := distance(ax, ay, a2x, a2y)
+			dist := distance(ax + ah, ay + ah, a2x + a2h, a2y + a2h)
 			if dist < (a.Hitbox() + a2.Hitbox()) {
 				a.Collide(a2)
 				a2.Collide(a)

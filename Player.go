@@ -95,7 +95,7 @@ func (p Player) Update() error {
 		}
 	}
 	if bvx != 0 || bvy != 0 {
-		bullet := newBullet(int(p.state.x)+int(p.Hitbox())*bvx, int(p.state.y)+int(p.Hitbox())*bvy, bvx, bvy, p.roomname)
+		bullet := newBullet(int(p.state.x + p.Hitbox())+int(p.Hitbox())*bvx, int(p.state.y + p.Hitbox())+int(p.Hitbox())*bvy, bvx, bvy, p.roomname)
 		*r.actors = append(*r.actors, bullet)
 	}
 	if movement {
