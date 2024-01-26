@@ -46,7 +46,7 @@ var scenes map[string]Scene
 
 func init() {
 	scenes = map[string]Scene{
-		"1":        TextScreen{"", "The most innovative quadrant presents …", "2"},
+		"1":        TextScreen{"", "The most innovative quadrant presents …\n\n\n\n(Press space)", "2"},
 		"2":        TextScreen{"BETTER DEAD THAN RED", "", "Jan45.2"},
 		"Jan45.2":  TextScreen{"January 1945, East Prussia", "", "Jan45.3"},
 		"Jan45.3":  TextScreen{"January 1945, East Prussia", "Dire times have come to Europe. After the Germans have conquered\nmost of the European continent, they are now on the retreat. As\nlong as they had been around, one could have a good time if one is\nGerman and not a political dissident.", "Jan45.4"},

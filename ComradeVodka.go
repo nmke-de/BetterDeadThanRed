@@ -70,6 +70,13 @@ func (c ComradeVodka) Update() error {
 		c.state.animation_state = (c.state.animation_state + 1) % uint(len(c.imgs)*on_frames)
 	} else {
 		c.state.animation_state = 0
+		// Shoot bullet
+		bvx := rand.Int()%3 - 1
+		bvy := rand.Int()%3 - 1
+		if bvx != 0 || bvy != 0 {
+			bullet := newBullet(int(c.state.x+c.Hitbox())+int(c.Hitbox())*bvx*2, int(c.state.y+c.Hitbox())+int(c.Hitbox())*bvy*2, bvx, bvy, c.roomname)
+			*r.actors = append(*r.actors, bullet)
+		}
 	}
 	return nil
 }

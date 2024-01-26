@@ -32,6 +32,11 @@ func (c Commie) Allegiance() []Allegiance {
 }
 
 func (c Commie) Collide(a Actor) {
+	for _, v := range a.Allegiance() {
+		if v == player {
+			a.TakeDamage(1)
+		}
+	}
 	cx, cy := c.Position()
 	ax, ay := a.Position()
 	r := Room(scenes[c.roomname].(Room))
