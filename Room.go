@@ -119,7 +119,7 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 		}
 	}
 
-	if r.cache["dead_commies"] == 18 {
+	if r.cache["dead_commies"] == 18 || (r.cache["dead_commies"] > 12 && len(*r.actors) < 2) {
 		println("Victory")
 		game.current = scenes["Victory"]
 	}
