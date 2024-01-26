@@ -46,10 +46,15 @@ var scenes map[string]Scene
 
 func init() {
 	scenes = map[string]Scene{
-		"title":   TextScreen{"La TITELO", "Hello, there!\nLorem ipsum dolor sit, amet. Consetetur.", "Funky12"},
-		"Funky12": FunkyHello{12, "Funky3"},
-		"Victory": TextScreen{"Victory!", "If you see this, you have won!\nCongrats!", "Room"},
-		"Funky3":  FunkyHello{3, "Victory"},
+		"1":        TextScreen{"", "The most innovative quadrant presents …", "2"},
+		"2":        TextScreen{"BETTER DEAD THAN RED", "", "Jan45.2"},
+		"Jan45.2":  TextScreen{"January 1945, East Prussia", "", "Jan45.3"},
+		"Jan45.3":  TextScreen{"January 1945, East Prussia", "Dire times have come to Europe. After the Germans have conquered\nmost of the European continent, they are now on the retreat. As\nlong as they had been around, one could have a good time if one is\nGerman and not a political dissident.", "Jan45.4"},
+		"Jan45.4":  TextScreen{"January 1945, East Prussia", "Dire times have come to Europe. After the Germans have conquered\nmost of the European continent, they are now on the retreat. As\nlong as they had been around, one could have a good time if one is\nGerman and not a political dissident.\n\nIn stead of the Nazis, the Red Army is now on the advance. Their\nadvance is propagandized as ”liberation“. It is truly a liberation\nfrom the tyranny of life. Their leader, Josef Stalin, certainly acts\nlike a tyrant himself.", "Jan45.5"},
+		"Jan45.5":  TextScreen{"January 1945, East Prussia", "Millions, whose ancestors have lived in these lands for centuries,\nhave packed their things and are fleeing westwards. Those who are\ntoo slow are killed by the Reds. Those who aren't are often killed\nfrom the coldest winter in a century. Those who turn to the Soviets\nare hanged as traitors. Those who somehow make it are not wel-\ncomed by their Western brethren.", "Jan45.6"},
+		"Jan45.6":  TextScreen{"January 1945, East Prussia", "Millions, whose ancestors have lived in these lands for centuries,\nhave packed their things and are fleeing westwards. Those who are\ntoo slow are killed by the Reds. Those who aren't are often killed\nfrom the coldest winter in a century. Those who turn to the Soviets\nare hanged as traitors. Those who somehow make it are not wel-\ncomed by their Western brethren.\n\nJOHANN, a local German, has pondered his options. His father, a\nstore owner, was hanged for refusing the Hitler salute. His mother,\nwhose family had fled the Bolshevists during the revolution, has\nrecently been abducted to Auschwitz, because her origins made the\nlocal Gauleiter suspicious that she would turn to the Russians.", "Jan45.7"},
+		"Jan45.7":  TextScreen{"January 1945, East Prussia", "JOHANN has thought about taking the shortcut over the partially\nfrozen Baltic Sea, but decided against that. Instead, he stands in a dark forest, after looting an abandoned German fortification for a machine gun. With the Nazis gone, he finally has liberty, and he shall not surrender his liberty to these commies!", "Tutorial"},
+		"Tutorial": TextScreen{"Tutorial", "Press Escape to pause.\nPress WASD to move.\nPress Arrow Keys to shoot.\nGood luck!", "Room"},
 		"Room": newRoom(
 			550, 450,
 			&[]Actor{
@@ -67,7 +72,7 @@ func main() {
 	ebiten.SetWindowSize(layout_width, layout_height)
 	ebiten.SetWindowResizable(true)
 	ebiten.SetWindowTitle("Better Dead Than Red")
-	game := &Game{scenes["title"], 0, false}
+	game := &Game{scenes["1"], 0, false}
 	err := ebiten.RunGame(game)
 	unwrap(err)
 }

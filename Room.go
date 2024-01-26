@@ -76,7 +76,7 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 			if ax == a2x && ay == a2y {
 				continue
 			}
-			dist := distance(ax + ah, ay + ah, a2x + a2h, a2y + a2h)
+			dist := distance(ax+ah, ay+ah, a2x+a2h, a2y+a2h)
 			if dist < (a.Hitbox() + a2.Hitbox()) {
 				a.Collide(a2)
 				a2.Collide(a)
