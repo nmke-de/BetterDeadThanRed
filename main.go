@@ -62,7 +62,7 @@ func init() {
 			},
 		),
 		"GameOver": TextScreen{"GAME OVER", "JOHANN died while valiantly fighting off commies.\nJoin LibRight to get better!", "GameOver"},
-		"Victory":  TextScreen{"VICTORY", "JOHANN fought off the commies for now, so he sets out to find\nlike minded people, united in their strive for freedom.\nFight with JOHANN by joining LibRight!", "Victory"},
+		"Victory":  TextScreen{"VICTORY", "JOHANN has fought off the commies for now, so he sets out to\nfind like minded people, united in their strive for freedom.\nFight with JOHANN by joining LibRight!", "Victory"},
 	}
 }
 
