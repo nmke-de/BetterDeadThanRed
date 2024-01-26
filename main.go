@@ -59,10 +59,10 @@ func init() {
 			550, 450,
 			&[]Actor{
 				newPlayer(100, 100, "Room"),
-				newComradeVodka(300, 300, "Room"),
-				newCommie(400, 400, "Room"),
 			},
 		),
+		"GameOver": TextScreen{"GAME OVER", "JOHANN died while valiantly fighting off commies.\nJoin LibRight to get better!", "GameOver"},
+		"Victory":  TextScreen{"VICTORY", "JOHANN fought off the commies for now, so he sets out to find\nlike minded people, united in their strive for freedom.\nFight with JOHANN by joining LibRight!", "Victory"},
 	}
 }
 

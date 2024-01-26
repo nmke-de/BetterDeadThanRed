@@ -25,7 +25,10 @@ func newRoom(w, h uint, actors *[]Actor) Room {
 		w, h,
 		ebiten.NewImage(int(w+30), int(h+30)),
 		actors,
-		RoomCache(map[string]int{}),
+		RoomCache(map[string]int{
+			"spawntick":    0,
+			"dead_commies": 0,
+		}),
 		bgm,
 	}
 }
@@ -61,8 +64,12 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 		}
 		if isplayer {
 			r.cache["player"] = i
+			px, py := a.Position()
+			r.cache["px"] = int(px)
+			r.cache["py"] = int(py)
 		}
 	}
+	r.cache["spawntick"] = (r.cache["spawntick"] + 1) % 200
 
 	dead := []int{}
 	for i, a := range *r.actors {
@@ -86,6 +93,13 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 		// Detect dead actors
 		if !a.Alive() {
 			dead = append(dead, i)
+			for _, v := range a.Allegiance() {
+				if v == player {
+					game.current = scenes["GameOver"]
+				} else if v == commie {
+					r.cache["dead_commies"] += 1
+				}
+			}
 		}
 	}
 
@@ -94,6 +108,20 @@ func (r Room) Update(game *Game, pressed []ebiten.Key) error {
 	for _, i := range dead {
 		*r.actors = remove(*r.actors, i-removed_dead)
 		removed_dead++
+	}
+
+	// Spawn new enemies
+	if r.cache["spawntick"] == 0 {
+		if r.cache["dead_commies"] < 12 {
+			*r.actors = append(*r.actors, newCommie((uint(r.cache["px"])+250)%r.width, (uint(r.cache["py"])+250)%r.height, "Room"))
+		} else if r.cache["dead_commies"] < 17 {
+			*r.actors = append(*r.actors, newComradeVodka((uint(r.cache["px"])+250)%r.width, (uint(r.cache["py"])+250)%r.height, "Room"))
+		}
+	}
+
+	if r.cache["dead_commies"] == 18 {
+		println("Victory")
+		game.current = scenes["Victory"]
 	}
 
 	return nil
